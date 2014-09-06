@@ -195,7 +195,7 @@ module.exports = GameOver;
 
 
       this.game.physics.startSystem(Phaser.Physics.NINJA);
-      this.game.physics.ninja.gravity = 0;
+      // this.game.physics.ninja.gravity = 0;
 
       // SETTING BOUNDS
       this.game.world.setBounds(0, 0, 4000, 600);
@@ -225,23 +225,35 @@ module.exports = GameOver;
 
       // WHAT CONTROLLS DO
       // RUN RIGHT
-      var runRight = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-      runRight.onDown.add(this.bear.runRight, this.bear);
+      // var runRight = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+      // runRight.onDown.add(this.bear.runRight, this.bear);
       // runRight.onUp.add(this.bear.decelerate, this.bear)
       // RUN LEFT
-      var runLeft = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-      runLeft.onDown.add(this.bear.runLeft, this.bear);
-      // runLeft.onUp.add(this.bear.decelerate, this.bear);
-      //JUMP
-      var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
-      jump.onDown.add(this.bear.jump, this.bear);
 
-      this.input.onDown.add(this.bear.jump, this.bear);
+      // var runLeft = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+      // runLeft.onDown.add(this.bear.runLeft, this.bear);
+      // // runLeft.onUp.add(this.bear.decelerate, this.bear);
+      // //JUMP
+      // var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
+      // jump.onDown.add(this.bear.jump, this.bear);
+
+      // this.input.onDown.add(this.bear.jump, this.bear);
 
      },
-
     update: function() {
       // this.game.physics.ninja.collide(this.bear, this.ground);
+      if (cursors.right.isDown)
+      {
+        this.bear.body.moveRight(50);
+      }
+      else if (cursors.left.isDown)
+      {
+        this.bear.body.moveLeft(50);
+      }
+      if (cursors.up.isDown)
+      {
+        this.bear.body.moveUp(50);
+      }
     },
     clickListener: function() {
       this.game.state.start('gameover');
