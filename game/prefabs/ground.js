@@ -7,12 +7,12 @@ var Ground = function(game, x, y, width, height) {
 
   // enable physics on the ground sprite
   // this is needed for collision detection
-  this.game.physics.arcade.enableBody(this);
+  this.game.physics.ninja.enableBody(this);
 
   // we don't want the ground's body
   // to be affected by gravity or external forces
-  this.body.allowGravity = false;
-  this.body.immovable = true;
+  this.body.allowGravity = true;
+  // this.body.immovable = true;
 
 
 };

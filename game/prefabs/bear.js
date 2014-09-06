@@ -5,11 +5,11 @@ var Bear = function(game, x, y, frame) {
 
   // initialize your prefab here
 
-  this.game.physics.arcade.enableBody(this);
+  this.game.physics.ninja.enableBody(this);
 
-  this.body.bounce.y = 0.2;
-  this.body.gravity.y = 300;
-  this.body.collideWorldBounds = true;
+  // this.body.bounce = 0;
+  // this.body.gravity = 0;
+  // this.body.collideWorldBounds = true;
 
 };
 
@@ -18,21 +18,23 @@ Bear.prototype.constructor = Bear;
 
   // RIGHT MOVEMENT
 Bear.prototype.runRight = function(){
-  this.body.drag.x = 0;
-  this.body.velocity.x = 400;
+  // this.body.drag.x = ;
+  this.body.velocity(700);
 };
   // LEFT MOVEMENT
 Bear.prototype.runLeft = function(){
-  this.body.drag.x = 0;
-  this.body.velocity.x = -400;
+  // this.body.drag.x = 0;
+  // this.body.velocity(-400);
+  this.body.moveLeft(50);
 };
 // SLOW WHEN NOT PRESSED
 Bear.prototype.decelerate = function(){
-  this.body.drag.x = 300;
+  // this.body.drag.x = 300;
 };
   //JUMPING
 Bear.prototype.jump = function(){
-    this.body.velocity.y = -400
+    // this.body.elocity = -400
+
 };
 
 Bear.prototype.update = function() {

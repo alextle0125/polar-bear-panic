@@ -15,7 +15,7 @@ window.onload = function () {
 
   game.state.start('boot');
 };
-},{"./states/boot":4,"./states/gameover":5,"./states/menu":6,"./states/play":7,"./states/preload":8}],2:[function(require,module,exports){
+},{"./states/boot":3,"./states/gameover":4,"./states/menu":5,"./states/play":6,"./states/preload":7}],2:[function(require,module,exports){
 'use strict';
 
 var Bear = function(game, x, y, frame) {
@@ -23,11 +23,11 @@ var Bear = function(game, x, y, frame) {
 
   // initialize your prefab here
 
-  this.game.physics.arcade.enableBody(this);
+  this.game.physics.ninja.enableBody(this);
 
-  this.body.bounce.y = 0.2;
-  this.body.gravity.y = 300;
-  this.body.collideWorldBounds = true;
+  // this.body.bounce = 0;
+  // this.body.gravity = 0;
+  // this.body.collideWorldBounds = true;
 
 };
 
@@ -36,21 +36,23 @@ Bear.prototype.constructor = Bear;
 
   // RIGHT MOVEMENT
 Bear.prototype.runRight = function(){
-  this.body.drag.x = 0;
-  this.body.velocity.x = 400;
+  // this.body.drag.x = ;
+  this.body.velocity(700);
 };
   // LEFT MOVEMENT
 Bear.prototype.runLeft = function(){
-  this.body.drag.x = 0;
-  this.body.velocity.x = -400;
+  // this.body.drag.x = 0;
+  // this.body.velocity(-400);
+  this.body.moveLeft(50);
 };
 // SLOW WHEN NOT PRESSED
 Bear.prototype.decelerate = function(){
-  this.body.drag.x = 300;
+  // this.body.drag.x = 300;
 };
   //JUMPING
 Bear.prototype.jump = function(){
-    this.body.velocity.y = -400
+    // this.body.elocity = -400
+
 };
 
 Bear.prototype.update = function() {
@@ -62,37 +64,6 @@ Bear.prototype.update = function() {
 module.exports = Bear;
 
 },{}],3:[function(require,module,exports){
-/* Full tutorial: http://codevinsky.ghost.io/phaser-2-0-tutorial-flappy-bird-part-2/ */
-'use strict';
-
-var Ground = function(game, x, y, width, height) {
-  Phaser.TileSprite.call(this, game, x, y, width, height, 'ground');
-  // start scrolling our ground
-
-  // enable physics on the ground sprite
-  // this is needed for collision detection
-  this.game.physics.arcade.enableBody(this);
-
-  // we don't want the ground's body
-  // to be affected by gravity or external forces
-  this.body.allowGravity = false;
-  this.body.immovable = true;
-
-
-};
-
-Ground.prototype = Object.create(Phaser.TileSprite.prototype);
-Ground.prototype.constructor = Ground;
-
-Ground.prototype.update = function() {
-
-  // write your prefab's specific update code here
-
-};
-
-module.exports = Ground;
-
-},{}],4:[function(require,module,exports){
 
 'use strict';
 
@@ -111,7 +82,7 @@ Boot.prototype = {
 
 module.exports = Boot;
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 
 'use strict';
 function GameOver() {}
@@ -139,7 +110,7 @@ GameOver.prototype = {
 };
 module.exports = GameOver;
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
  /* Full tutorial: http://codevinsky.ghost.io/phaser-2-0-tutorial-flappy-bear-part-1/ */
   'use strict';
   function Menu() {}
@@ -202,37 +173,42 @@ module.exports = GameOver;
 
   module.exports = Menu;
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 
   'use strict';
 
   var Bear = require('../prefabs/bear');
-  var Ground = require('../prefabs/ground');
-  // var game = new Phaser.Game();
-  var cursors;
+  // var Ground = require('../prefabs/ground');
+  var game = new Phaser.Game();
   var bear;
-
+  var cursors;
   function Play() {}
   Play.prototype = {
 
 
     create: function() {
 
-      this.game.physics.startSystem(Phaser.Physics.ARCADE);
-      this.game.physics.arcade.gravity.y = 300;
+      // game.physics.ninja.enable.AABB(this.bear);
+
+      cursors = game.input.keyboard.createCursorKeys();
+
+
+
+      this.game.physics.startSystem(Phaser.Physics.NINJA);
+      this.game.physics.ninja.gravity = 0;
 
       // SETTING BOUNDS
       this.game.world.setBounds(0, 0, 4000, 600);
 
-      // this.game.physics.arcade.gravity.x = -200;
+      // this.game.physics.ninja.gravity.x = -200;
       this.background = this.game.add.sprite(0,0,'background');
 
       this.bear = new Bear(this.game, 100, this.game.height/2);
 
       // CREATING AND ADDING A NEW GROUND
-      this.ground = new Ground(this.game, 0, 550, 4000, 100);
+      // this.ground = new Ground(this.game, 0, 600, 4000, 100);
 
-      this.game.add.existing(this.ground);
+      // this.game.add.existing(this.ground);
 
       //ADDS YOUR BEAR
       this.game.add.existing(this.bear);
@@ -251,11 +227,11 @@ module.exports = GameOver;
       // RUN RIGHT
       var runRight = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
       runRight.onDown.add(this.bear.runRight, this.bear);
-      runRight.onUp.add(this.bear.decelerate, this.bear)
+      // runRight.onUp.add(this.bear.decelerate, this.bear)
       // RUN LEFT
       var runLeft = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
       runLeft.onDown.add(this.bear.runLeft, this.bear);
-      runLeft.onUp.add(this.bear.decelerate, this.bear);
+      // runLeft.onUp.add(this.bear.decelerate, this.bear);
       //JUMP
       var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
       jump.onDown.add(this.bear.jump, this.bear);
@@ -265,7 +241,7 @@ module.exports = GameOver;
      },
 
     update: function() {
-      this.game.physics.arcade.collide(this.bear, this.ground, this.deathHandler, null, this);
+      // this.game.physics.ninja.collide(this.bear, this.ground);
     },
     clickListener: function() {
       this.game.state.start('gameover');
@@ -274,7 +250,7 @@ module.exports = GameOver;
 
   module.exports = Play;
 
-},{"../prefabs/bear":2,"../prefabs/ground":3}],8:[function(require,module,exports){
+},{"../prefabs/bear":2}],7:[function(require,module,exports){
 
 'use strict';
 function Preload() {
