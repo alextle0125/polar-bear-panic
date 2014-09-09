@@ -18,12 +18,8 @@ var Lake = function(game, x, y, width, height) {
 
   this.game.physics.arcade.enableBody(this);
   this.body.collideWorldBounds = true;
-<<<<<<< HEAD
-=======
    // HERE
-
   // this.body.immovable = true;
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
 }
 
 Lake.prototype = Object.create(Phaser.TileSprite.prototype);
@@ -139,10 +135,6 @@ Game.prototype = {
     this.bear = new Bear(this.game, 900, 500);
     this.game.add.existing(this.bear);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
     this.lake = new Lake(this.game, 0, 565, 12600, 70);
     this.game.add.existing(this.lake);
 
@@ -299,11 +291,7 @@ Game.prototype = {
     this.game.physics.arcade.collide(layer, iceBergs9);
     this.game.physics.arcade.collide(layer, iceBergs10);
 
-<<<<<<< HEAD
-    globalWarmingSpeed = 250;
-=======
     globalWarmingSpeed = 180;
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
 
     chaser.body.velocity.x = globalWarmingSpeed;
     warmth.body.velocity.x = globalWarmingSpeed;
@@ -372,8 +360,6 @@ Game.prototype = {
         };
       }
 
-<<<<<<< HEAD
-=======
       if (this.game.physics.arcade.overlap(this.bear, this.lake)) {
         Bear.prototype.runRight = function(){
           this.body.velocity.x = 165;
@@ -404,7 +390,6 @@ Game.prototype = {
         };
       }
 
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
       if (this.game.physics.arcade.overlap(this.bear, chaser)) {
       	this.bear.die();
       }
