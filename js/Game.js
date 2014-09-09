@@ -81,10 +81,9 @@ Game.prototype = {
 	},
 
 	makeSnow: function(object) {
-		object.makeParticles('snow');
 		object.width = this.world.width;
-		object.minParticleScale = 0.4;
-		object.maxParticleScale = 0.8;
+		object.minParticleScale = 0.1;
+		object.maxParticleScale = 0.5;
 		object.setYSpeed(300, 500);
 		object.setXSpeed(-500, -1000);
 		object.minRotation = 0;
@@ -137,10 +136,16 @@ Game.prototype = {
     this.bear = new Bear(this.game, 900, 500);
     this.game.add.existing(this.bear);
 
+
     this.lake = new Lake(this.game, 0, 565, 12600, 70);
     this.game.add.existing(this.lake);
 
+    snowFlakes = this.add.emitter(this.world.centerX, 0, 1000);
+    snowFlakes.makeParticles('snowFlakes');
+    this.makeSnow(snowFlakes);
+
     snow = this.add.emitter(this.world.centerX, 0, 1000);
+    snow.makeParticles('snow');
     this.makeSnow(snow);
 
     hardRain = this.add.emitter(this.world.centerX, 0, 100);
@@ -262,7 +267,7 @@ Game.prototype = {
     warmth = this.add.sprite(0,0, 'warmth');
     this.warm(warmth);
 
-    pole = this.add.sprite( 11715, 200, 'pole');
+    pole = this.add.sprite( 12250, 200, 'pole');
     this.game.physics.enable(pole, Phaser.Physics.ARCADE);
 
 	},
@@ -288,10 +293,11 @@ Game.prototype = {
     this.game.physics.arcade.collide(layer, iceBergs9);
     this.game.physics.arcade.collide(layer, iceBergs10);
 
-    // globalWarmingSpeed = 180;
+    globalWarmingSpeed = 180;
 
-    // chaser.body.velocity.x = globalWarmingSpeed;
-    // warmth.body.velocity.x = globalWarmingSpeed;
+    chaser.body.velocity.x = globalWarmingSpeed;
+    warmth.body.velocity.x = globalWarmingSpeed;
+
 
       if (this.game.physics.arcade.overlap(this.bear, iceBergs)) {
         this.bear.body.velocity.x = -800;
