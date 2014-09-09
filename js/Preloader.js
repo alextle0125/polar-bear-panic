@@ -21,8 +21,6 @@ Preloader.prototype = {
     	this.game.load.spritesheet('chaser', 'assets/sunKill6.png', 600, 700);
         this.game.load.spritesheet('pole', 'assets/northPole.png', 25, 200);
         this.game.load.spritesheet('warmth', 'assets/bigTransparentcircle.png', 1400, 700);
-
-
 	},
 
 	create: function() {

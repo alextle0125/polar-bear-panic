@@ -1,33 +1,26 @@
 Game = function(game) {
-	cursors = null;
-	sky = null;
-	map = null;
-	layer = null;
-	snow = null;
-	bear = null;
-	hardRain = null;
-	gameOver = false;
-	chaser = null;
-	pole = null;
+  cursors = null;
+  sky = null;
+  map = null;
+  layer = null;
+  snow = null;
+  bear = null;
+  hardRain = null;
+  gameOver = false;
+  chaser = null;
+  pole = null;
   warmth = null;
 };
 
 var Lake = function(game, x, y, width, height) {
+  // Phaser.Sprite.call(this, game, x, y, 'bear', frame);
   Phaser.TileSprite.call(this, game, x, y, width, height, 'lakes');
   this.autoScroll(-200,0);
 
-  this.game.physics.arcade.enableBody(this);
-  this.body.collideWorldBounds = true;
-<<<<<<< HEAD
-=======
-   // HERE
+  this.game.physics.arcade.enableBody(this); // HERE
 
   // this.body.immovable = true;
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
 }
-
-Lake.prototype = Object.create(Phaser.TileSprite.prototype);
-Lake.prototype.constructor = Lake;
 
 var Bear = function(game, x, y, frame) {
     Phaser.Sprite.call(this, game, x, y, 'bear', frame);
@@ -67,9 +60,9 @@ Bear.prototype.stop = function(){
 };
 
 Bear.prototype.die = function(){
-	this.game.add.text(this.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
-	this.kill();
-	this.game.state.start("Over");
+  this.game.add.text(this.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
+  this.kill();
+  this.game.state.start("Over");
 };
 
 Bear.prototype.win = function(){
@@ -79,49 +72,50 @@ Bear.prototype.win = function(){
 
 Game.prototype = {
 
-	restartGame: function() {
-		this.game.state.start('Game');
-	},
+  restartGame: function() {
+    this.game.state.start('Game');
+  },
 
-	makeSnow: function(object) {
-		object.width = this.world.width;
-		object.minParticleScale = 0.1;
-		object.maxParticleScale = 0.5;
-		object.setYSpeed(300, 500);
-		object.setXSpeed(-500, -1000);
-		object.minRotation = 0;
-		object.maxRotation = 0;
-		object.start(false, 1600, 5, 0);
-	},
+  makeSnow: function(object) {
+    object.makeParticles('snow');
+    object.width = this.world.width;
+    object.minParticleScale = 0.4;
+    object.maxParticleScale = 0.8;
+    object.setYSpeed(300, 500);
+    object.setXSpeed(-500, -1000);
+    object.minRotation = 0;
+    object.maxRotation = 0;
+    object.start(false, 1600, 5, 0);
+  },
 
-	makeRain: function(object) {
-		this.physics.enable(object, Phaser.Physics.ARCADE)
-		object.width = this.world.width;
-		object.makeParticles('fish');
-		object.setYSpeed(300, 500);
-		object.setXSpeed(-500, -1000);
-		object.minRotation = 360;
-		object.maxRotation = 90;
-		object.start(false, 1600, 5, 0);
-	},
+  makeRain: function(object) {
+    this.physics.enable(object, Phaser.Physics.ARCADE)
+    object.width = this.world.width;
+    object.makeParticles('fish');
+    object.setYSpeed(300, 500);
+    object.setXSpeed(-500, -1000);
+    object.minRotation = 360;
+    object.maxRotation = 90;
+    object.start(false, 1600, 5, 0);
+  },
 
-	chase: function(object){
-		// object.animations.add('chase');
-		// object.animations.play('chase', 7, true);
-		this.game.physics.enable(object, Phaser.Physics.ARCADE);
-		object.body.collideWorldBounds = true;
-	},
+  chase: function(object){
+    // object.animations.add('chase');
+    // object.animations.play('chase', 7, true);
+    this.game.physics.enable(object, Phaser.Physics.ARCADE);
+    object.body.collideWorldBounds = true;
+  },
 
   warm: function(object){
     this.game.physics.enable(object, Phaser.Physics.ARCADE);
     object.body.collideWorldBounds = true;
   },
 
-	create: function() {
+  create: function() {
 
-		// var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
+    // var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
 
-		this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.physics.arcade.gravity.y = 300;
 
     cursors = this.input.keyboard.createCursorKeys();
@@ -136,22 +130,14 @@ Game.prototype = {
     map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
     layer.resizeWorld();
 
+    this.lake = new Lake(this.game, 0, 500, 800, 600);
+    // this.game.add.existing(this.lake);
+    // console.log(this.lake);
+
     this.bear = new Bear(this.game, 900, 500);
     this.game.add.existing(this.bear);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
-    this.lake = new Lake(this.game, 0, 565, 12600, 70);
-    this.game.add.existing(this.lake);
-
-    snowFlakes = this.add.emitter(this.world.centerX, 0, 1000);
-    snowFlakes.makeParticles('snowFlakes');
-    this.makeSnow(snowFlakes);
-
     snow = this.add.emitter(this.world.centerX, 0, 1000);
-    snow.makeParticles('snow');
     this.makeSnow(snow);
 
     hardRain = this.add.emitter(this.world.centerX, 0, 100);
@@ -273,19 +259,18 @@ Game.prototype = {
     warmth = this.add.sprite(0,0, 'warmth');
     this.warm(warmth);
 
-    pole = this.add.sprite( 12250, 200, 'pole');
+    pole = this.add.sprite( 11715, 200, 'pole');
     this.game.physics.enable(pole, Phaser.Physics.ARCADE);
+  },
 
-	},
+  update : function() {
+    // this.playerLocations.set("test");
+    var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
+    // playerLocations.on('value', function (snapshot) {
+    //   console.log(snapshot.val());
+    // });
 
-	update : function() {
-		// this.playerLocations.set("test");
-		var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
-		// playerLocations.on('value', function (snapshot) {
-		//   console.log(snapshot.val());
-		// });
-
-		this.game.physics.arcade.collide(this.bear, layer);
+    this.game.physics.arcade.collide(this.bear, layer);
     this.game.physics.arcade.collide(this.bear, hardRain);
     this.game.physics.arcade.collide(pole, layer);
     this.game.physics.arcade.collide(layer, iceBergs);
@@ -299,15 +284,10 @@ Game.prototype = {
     this.game.physics.arcade.collide(layer, iceBergs9);
     this.game.physics.arcade.collide(layer, iceBergs10);
 
-<<<<<<< HEAD
-    globalWarmingSpeed = 250;
-=======
-    globalWarmingSpeed = 180;
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
+    // globalWarmingSpeed = 180;
 
-    chaser.body.velocity.x = globalWarmingSpeed;
-    warmth.body.velocity.x = globalWarmingSpeed;
-
+    // chaser.body.velocity.x = globalWarmingSpeed;
+    // warmth.body.velocity.x = globalWarmingSpeed;
 
       if (this.game.physics.arcade.overlap(this.bear, iceBergs)) {
         this.bear.body.velocity.x = -800;
@@ -341,76 +321,12 @@ Game.prototype = {
       if (this.game.physics.arcade.overlap(this.bear, iceBergs10)) {
         this.bear.body.velocity.x = -800;
       }
-
-      if (this.game.physics.arcade.overlap(this.bear, this.lake)) {
-        Bear.prototype.runRight = function(){
-          this.body.velocity.x = 165;
-          this.scale.x = 1;
-          this.animations.play('right');
-        };
-        Bear.prototype.runLeft = function(){
-          this.body.velocity.x = -165;
-          this.scale.x = -1;
-          this.animations.play('left');
-        };
-        Bear.prototype.jump = function(){
-          this.body.velocity.y = -375;
-        };
-      } else {
-        Bear.prototype.runRight = function(){
-          this.body.velocity.x = 450;
-          this.scale.x = 1;
-          this.animations.play('right');
-        };
-        Bear.prototype.runLeft = function(){
-          this.body.velocity.x = -450;
-          this.scale.x = -1;
-          this.animations.play('left');
-        };
-        Bear.prototype.jump = function(){
-          this.body.velocity.y = -600;
-        };
-      }
-
-<<<<<<< HEAD
-=======
-      if (this.game.physics.arcade.overlap(this.bear, this.lake)) {
-        Bear.prototype.runRight = function(){
-          this.body.velocity.x = 165;
-          this.scale.x = 1;
-          this.animations.play('right');
-        };
-        Bear.prototype.runLeft = function(){
-          this.body.velocity.x = -165;
-          this.scale.x = -1;
-          this.animations.play('left');
-        };
-        Bear.prototype.jump = function(){
-          this.body.velocity.y = -375;
-        };
-      } else {
-        Bear.prototype.runRight = function(){
-          this.body.velocity.x = 450;
-          this.scale.x = 1;
-          this.animations.play('right');
-        };
-        Bear.prototype.runLeft = function(){
-          this.body.velocity.x = -450;
-          this.scale.x = -1;
-          this.animations.play('left');
-        };
-        Bear.prototype.jump = function(){
-          this.body.velocity.y = -600;
-        };
-      }
-
->>>>>>> 4e2aaecbeb504f78fc1537de8fd1d678f82ee60e
       if (this.game.physics.arcade.overlap(this.bear, chaser)) {
-      	this.bear.die();
+        this.bear.die();
       }
 
       if (this.game.physics.arcade.overlap(this.bear, pole)) {
-      	this.bear.win();
+        this.bear.win();
       }
 
     if (cursors.left.isDown) {
@@ -460,8 +376,8 @@ Game.prototype = {
       if (this.game.physics.arcade.collide(this.bear, iceBergs10) === true){
       }
       this.bear.runRight();
-  		// this.playerLocations.set("this old man");
-  		// playerLocations.set("test");
+      // this.playerLocations.set("this old man");
+      // playerLocations.set("test");
 
     } else {
         this.bear.stop();
@@ -474,7 +390,7 @@ Game.prototype = {
     }
 
     if (gameOver === true) {
-    	// this.game.state.start('MainMenu');
+      // this.game.state.start('MainMenu');
     }
-	}
+  }
 };
