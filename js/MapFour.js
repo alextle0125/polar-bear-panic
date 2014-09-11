@@ -137,6 +137,7 @@ MapFour.prototype = {
     sky.fixedToCamera = true;
 
 
+
     mapFour = this.game.add.tilemap('mapFour`');
     mapFour.addTilesetImage('kenney');
     layer = mapFour.createLayer('Tile Layer 4');
