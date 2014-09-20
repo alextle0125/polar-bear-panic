@@ -19,6 +19,7 @@
     <script src="js/Instructions.js"></script>
     <script src= "js/Multiplayer.js"></script>
     <script src="js/Levels.js"></script>
+    <script src="js/AboutUs.js"></script>
 
     <style type="text/css">
         canvas {
@@ -34,15 +35,13 @@
 
 </head>
 <body>
-<nav>
-        <a href="https://github.com/woolly-bear-caterpillars-2014/polar-bear-panic">About Us</a>
-</nav>
     <div id = "game">
         <script>
         (function() {
             var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
             game.state.add('Preloader', Preloader);
             game.state.add('MainMenu', MainMenu);
+            game.state.add('AboutUs', AboutUs);
             game.state.add('Levels', Levels);
             game.state.add('MapOne', MapOne);
             game.state.add('MapTwo', MapTwo);
@@ -58,3 +57,5 @@
     </div>
 </body>
 </html>
+
+
