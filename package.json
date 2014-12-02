@@ -4,6 +4,21 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "^4.8.7"
-  }
+    "express": "^4.8.7",
+    "package.json": "0.0.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alextle0125/polar-bear-panic.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alextle0125/polar-bear-panic/issues"
+  },
+  "homepage": "https://github.com/alextle0125/polar-bear-panic"
 }
